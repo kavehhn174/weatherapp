@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     cityList: [{
-        type: String
+        name: String,
+        key: String,
     }]
 })
 

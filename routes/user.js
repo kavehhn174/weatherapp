@@ -28,6 +28,10 @@ router.post("/myCities", function (req,res){
     userController.cities_post(req,res);
 })
 
+router.get("/logout", function (req,res) {
+    userController.logOut_get(req,res);
+})
+
 
 
 module.exports = router;

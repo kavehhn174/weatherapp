@@ -1,6 +1,8 @@
 const User = require('../Models/User')
 const {response} = require("express");
 const jwt = require('jsonwebtoken');
+const https = require('https');
+const {cities_post} = require("./userController");
 
 
 
@@ -10,6 +12,20 @@ const createToken = (id) =>{
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: maxAge
     });
+}
+
+const findCityKey = (cityName) => {
+    let cityKey;
+    const url = 'https://dataservice.accuweather.com/locations/v1/cities/search?apikey='
+    https.get(url + process.env.WEATHER_APIKEY +'&q=' + cityName, function (response) {
+        response.on("data", function (data) {
+            const weatherData = JSON.parse(data);
+            const cityCode = weatherData[0];
+            cityKey = cityCode.Key;
+            console.log(cityKey);
+        })
+    });
+    return cityKey;
 }
 
 module.exports.signUp_post = async (req,res) => {
@@ -43,17 +59,33 @@ module.exports.logIn_post = async (req,res) => {
 
 module.exports.cities_post = async (req,res) => {
     const { newCity } = req.body;
-    try {
-        const token = req.cookies.jwt;
-        const decoded = jwt.decode(token, process.env.JWT_SECRET)
-        User.findById(decoded.id, function (err, doc){
-            doc.cityList.push(newCity);
-            res.status(201).redirect("/myCities");
+    let cityKey = '';
+    const url = 'https://dataservice.accuweather.com/locations/v1/cities/search?apikey='
+    await https.get(url + process.env.WEATHER_APIKEY +'&q=' + newCity, function (response) {
+        response.on("data", function (data) {
+            const weatherData = JSON.parse(data);
+            const cityCode = weatherData[0];
+            cityKey = cityCode.Key;
+            console.log(cityKey);
+            try {
+                const token = req.cookies.jwt;
+                const decoded = jwt.decode(token, process.env.JWT_SECRET)
+                User.findById(decoded.id, async function (err, doc){
+                    doc.cityList.push({name: newCity, key: cityKey});
+                    await doc.save();
+                    res.status(201).redirect("/myCities");
+                })
+            }
+            catch (err) {
+                res.status(400).json(err);
+            }
         })
-    }
-    catch (err) {
-        res.status(400).json(err);
-    }
+    });
 
+}
+
+module.exports.logOut_get = async (req,res) => {
+    res.cookie('jwt', '', {maxAge: 1});
+    res.redirect('/login');
 }
 

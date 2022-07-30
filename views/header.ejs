@@ -24,8 +24,11 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <% if (user) { %>
+                        <li class="nav-item ml-auto helloTitle">
+                            <a class="nav-link active" aria-current="page" href="/">Hello <%=user.username%></a>
+                        </li>
                         <li class="nav-item ml-auto">
-                            <p> Hello <%= loggedInName %> </p>
+                            <a class="nav-link active" aria-current="page" href="/logout">Log Out</a>
                         </li>
                     <%} else {%>
                         <li class="nav-item ml-auto">

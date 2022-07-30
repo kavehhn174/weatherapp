@@ -19,7 +19,7 @@ body {
 
 .navbar {
     border-radius: 20px 20px 0 0;
-    padding: 20px!important;
+    padding: 10px!important;
     font-family: 'Quicksand', sans-serif;
 }
 
@@ -36,10 +36,15 @@ ul {
     list-style-type: none;
 }
 
-li {
+li.sideBarItem {
     display: inline-block;
     padding: 20px;
 }
+
+#cityAddTextBox {
+    display: inline;
+}
+
 
 .left-col {
     text-align: left;
@@ -91,4 +96,16 @@ a:active {
 #textBox.fade {
     width: 200px;
     opacity: 1;
+}
+
+.helloTitle {
+    padding-right: 20px;
+}
+
+.weather-report {
+    margin: 20px 40px;
+    width: auto;
+    height: 200px;
+    background-color: lightblue;
+    border-radius: 20px;
 }
