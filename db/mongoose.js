@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 async function mongoCon() {
-    mongoose.connect('mongodb+srv://kavehhn174:Kk135792468@cluster0.nmijf.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
+    mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true});
 }
 
 async function mongConnect() {
