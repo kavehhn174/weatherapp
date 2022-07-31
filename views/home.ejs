@@ -3,7 +3,9 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <%- include("sidebar") -%>
+
             <div class="col-7 center-col">
+                <% if (user.cityList.length > 0) {%>
                 <div class="today-weather">
                     <ul>
                         <div class="today-weather__list">
@@ -46,6 +48,11 @@
                         </div>
                     </ul>
                 </div>
+                <%} else {%>
+                    <div class="nocity-user">
+                        <p>Please Add A City From My Cities Menu</p>
+                    </div>
+                <%}%>
             </div>
             <div class="col-3">
 

@@ -185,3 +185,14 @@ a:active {
     background-color: #24609B;
     color: #C4E2FF;
 }
+
+.nocity-user {
+    justify-content: center;
+    width: auto;
+    margin: 20px 40px;
+    background-color: #C4E2FF;
+    border-radius: 20px;
+    color: #24609B;
+    font-weight: bold;
+    font-family: Nunito, sans-serif;
+}
