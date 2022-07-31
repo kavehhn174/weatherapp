@@ -1,5 +1,4 @@
 const express = require('express');
-const User = require('../Models/User');
 const userController = require('../controllers/userController')
 const cookieParser = require('cookie-parser');
 const {requireAuth} = require("../middleware/userMiddleware");

@@ -1,4 +1,4 @@
-const User = require('../Models/User')
+const User = require('../models/user');
 const {response} = require("express");
 const jwt = require('jsonwebtoken');
 const https = require('https');
