@@ -176,5 +176,12 @@ a:active {
 }
 
 .mycities-right-col {
+    padding-top: 50px;
+}
 
+.addButton {
+    border-radius: 100px;
+    border: none;
+    background-color: #24609B;
+    color: #C4E2FF;
 }

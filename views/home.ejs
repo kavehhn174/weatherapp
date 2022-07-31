@@ -20,23 +20,23 @@
 
                             <li>
                                 <div class="today-weather__temperature">
-                                    <p> 40°C </p>
+                                    <p> <%=condition.Temperature.Metric.Value%>°C </p>
                                 </div>
                             </li>
 
                             <li>
                                 <div class="today-weather__status">
-                                    <p> Mostly Clear </p>
+                                    <p> <%=condition.WeatherText%> </p>
                                 </div>
                             </li>
 
                             <li>
                                 <div class="today-weather__details">
                                     <div class="details__items">
-                                        <p><i class="fa-solid fa-temperature-full"></i> 990 hpa </p>
+                                        <p><i class="fa-solid fa-temperature-full"></i> <%=condition.Pressure.Metric.Value%> hpa </p>
                                     </div>
                                     <div class="details__items">
-                                        <p> <i class="fa-solid fa-droplet"></i> 32% </p>
+                                        <p> <i class="fa-solid fa-droplet"></i> <%=condition.RelativeHumidity%> % </p>
                                     </div>
                                     <div class="details__items">
                                         <p> <i class="fa-solid fa-wind"></i> <%=condition.Wind.Speed.Metric.Value%> km/h </p>
