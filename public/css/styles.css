@@ -102,10 +102,79 @@ a:active {
     padding-right: 20px;
 }
 
-.weather-report {
+.today-weather {
+    justify-content: center;
     margin: 20px 40px;
     width: auto;
-    height: 200px;
-    background-color: lightblue;
+    background-color: #C4E2FF;
     border-radius: 20px;
+    text-align: left;
+    color: #24609B;
+    font-family: Nunito, sans-serif;
+}
+
+.today-weather__cityname {
+    font-weight: bold;
+    padding: 20px 2px;
+    display: inline-block;
+}
+
+.today-weather__time {
+    font-weight: bold;
+    padding: 20px 2px;
+    display: inline-block;
+}
+
+.today-weather__p {
+    display: inline-block;
+}
+
+.today-weather__info {
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.today-weather__list {
+    padding-right: 32px;
+}
+
+.today-weather__temperature {
+    text-align: center;
+    font-weight: bold;
+    font-size: 4rem;
+}
+
+.today-weather__status {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.today-weather__details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details__items {
+    margin: auto;
+}
+
+.mycities-mid-col {
+    padding: 30px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: oblique;
+    font-weight: bolder;
+}
+
+.mid-col__header {
+    padding-bottom: 20px;
+}
+
+.mid-col__items {
+    text-align: left;
+    list-style-type: none;
+}
+
+.mycities-right-col {
+
 }

@@ -4,21 +4,36 @@
         <div class="row justify-content-md-center">
             <%- include("sidebar") -%>
             <div class="col-7 center-col">
-                <h1>List Of Your Cities : </h1>
-                <% for (let i = 0; i < cityList.length; i++) {%>
-                    <li> <%= cityList[i].name %> </li>
-                <%}%>
+                <div class="mycities-mid-col">
+                    <div class="mid-col__header">
+                        <h3>Active City : <%= activeCity.name %></h3>
+                        <h1>List Of Your Cities : </h1>
+                    </div>
+                    <div class="mid-col__items">
+                        <form action="activeCity" method="post">
+
+                        <% for (let i = 0; i < cityList.length; i++) {%>
+                                <input type="radio" name="cityCheck" value="<%= cityList[i].name %>"> <%= cityList[i].name %> <br>
+                        <%}%>
+                            <button type="submit" style="display: block">Change City</button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
             <div class="col-3">
-                <form action="myCities" method="post">
+                <div class="mycities-right-col">
+                    <form action="myCities" method="post">
                         <input id="cityAddTextBox" class="" type="text" name="newCity">
                         <button id="handle" class="button justify-content-md-center" type="submit" name="button">
                             <i id="addIcon" class="fa-solid fa-plus"></i>
                         </button>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
 
 
 <%- include("footer") -%>

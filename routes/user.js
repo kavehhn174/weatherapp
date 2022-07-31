@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../Models/User');
 const userController = require('../controllers/userController')
 const cookieParser = require('cookie-parser');
+const {requireAuth} = require("../middleware/userMiddleware");
 
 const router = new express.Router();
 router.use(cookieParser());
@@ -32,6 +33,9 @@ router.get("/logout", function (req,res) {
     userController.logOut_get(req,res);
 })
 
+router.post("/activeCity", async function (req,res) {
+    userController.activeCity_post(req,res);
+})
 
 
 module.exports = router;

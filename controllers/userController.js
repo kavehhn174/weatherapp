@@ -14,18 +14,16 @@ const createToken = (id) =>{
     });
 }
 
-const findCityKey = (cityName) => {
-    let cityKey;
+const findCityKey = (cityName, callback) => {
     const url = 'https://dataservice.accuweather.com/locations/v1/cities/search?apikey='
     https.get(url + process.env.WEATHER_APIKEY +'&q=' + cityName, function (response) {
         response.on("data", function (data) {
             const weatherData = JSON.parse(data);
             const cityCode = weatherData[0];
-            cityKey = cityCode.Key;
-            console.log(cityKey);
+            const cityKey = cityCode.Key;
+            callback(cityKey);
         })
     });
-    return cityKey;
 }
 
 module.exports.signUp_post = async (req,res) => {
@@ -87,5 +85,20 @@ module.exports.cities_post = async (req,res) => {
 module.exports.logOut_get = async (req,res) => {
     res.cookie('jwt', '', {maxAge: 1});
     res.redirect('/login');
+}
+
+module.exports.activeCity_post = async (req,res) => {
+    const { cityCheck } = req.body;
+    const token = req.cookies.jwt;
+    const decoded = jwt.decode(token, process.env.JWT_SECRET)
+    User.findById(decoded.id, async function (err, doc){
+            findCityKey(cityCheck, async function (key){
+            doc.activeCity.name = cityCheck;
+            doc.activeCity.key = key;
+            await doc.save();
+            res.status(201).redirect("/mycities");
+        })
+
+    })
 }
 

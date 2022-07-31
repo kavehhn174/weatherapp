@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
     cityList: [{
         name: String,
         key: String,
-    }]
+    }],
+    activeCity: {
+        name: String,
+        key: String,
+    },
 })
 
 

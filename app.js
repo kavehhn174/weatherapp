@@ -25,17 +25,24 @@ app.use(bodyParser.urlencoded({
 app.set('view engine', 'ejs');
 
 function getTodayWeather (key, callback) {
-    const url = 'https://dataservice.accuweather.com/currentconditions/v1/' + key + '?apikey=' + process.env.WEATHER_APIKEY
-    https.get (url, function (response){
-        response.on("data", function (data){
-            const todayWeather = JSON.parse(data)
-            const temp = todayWeather[0].Temperature.Metric.Value;
-            return callback(temp);
+    const url = 'https://dataservice.accuweather.com/currentconditions/v1/' + key + '?apikey=' + process.env.WEATHER_APIKEY + "&details=true"
+
+    try {
+        https.get (url, function (response){
+            response.on("data", function (data){
+                const todayWeather = JSON.parse(data)
+                const condition = todayWeather[0]
+                return callback(condition);
+            })
         })
-    })
+    } catch (err) {
+        callback(err);
+    }
+
 }
 
 app.get("/" , requireAuth, async function (req,res) {
+    const date = Date();
 
     if (req.cookies.jwt) {
         const token = req.cookies.jwt;
@@ -45,18 +52,24 @@ app.get("/" , requireAuth, async function (req,res) {
                 User.findById(decoded.id, async function (err, docs) {
                 const username = docs.username;
                 if (docs.cityList.length > 0) {
-                    await getTodayWeather(docs.cityList[0].key , function(temp) {
-                        res.render("home", {
-                            user: docs,
-                            loggedInName: username,
-                            temperature: temp
-                        });
+                    await getTodayWeather(docs.activeCity.key , function(condition) {
+                        try {
+                            res.render("home", {
+                                user: docs,
+                                loggedInName: username,
+                                condition: condition,
+                            });
+                        }
+                        catch (err) {
+                            console.log(err);
+                        }
+
                     })
 
                 } else {
                     res.render("home", {user: docs,loggedInName: username});
                 }
-            })
+                })
         } catch (err) {
             console.log(err);
         }
@@ -73,7 +86,8 @@ app.get("/mycities" , requireAuth, async function (req,res) {
             User.findById(decoded.id, function (err, docs) {
                 const username = docs.username;
                 const cityList = docs.cityList;
-                res.render("myCities", {user: docs, loggedInName: username, cityList: cityList});
+                const activeCity = docs.activeCity;
+                res.render("myCities", {user: docs, loggedInName: username, cityList: cityList, activeCity: activeCity});
             })
         } catch (err) {
             console.log(err);
