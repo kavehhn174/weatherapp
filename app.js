@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user');
 require('./db/mongoose');
-const User = require('./Models/User')
+const User = require('./models/User')
 const https = require('https');
 
 const app = express();
